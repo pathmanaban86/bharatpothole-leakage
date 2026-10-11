@@ -36,6 +36,9 @@ scripts/
                                    contamination control, final subset results (R1-R6)
   07_make_figures.py               Figures 1-5 (PDF, 600-dpi TIFF, PNG)
   08_export_release.py             collects split files and result tables (no images) into one zip
+  09_visual_evidence.py            supplementary figures S1-S7 (leaked pairs, export copies, d_H ladder,
+                                   predictions, contamination test, annotation conflicts, domain shift)
+                                   and a small labelled sample dataset
   pubstyle.py                      shared figure style, colours and notation
 notebooks/
   run_pipeline_colab.ipynb         runs scripts 01-08 in order
@@ -73,6 +76,7 @@ The split itself is released as file lists with MD5 hashes (`splits/` in the rel
 | 6 | `!python ".../06_revision_checks.py"` | minutes | `experiments/leakage_paper/revision/` |
 | 7 | `!python ".../07_make_figures.py"` | none | `experiments/leakage_paper/publication/figures/` |
 | 8 | `!python ".../08_export_release.py" --with-predictions` | none | `release/bharatpothole-leakage-artifacts.zip` |
+| 9 | `!python ".../09_visual_evidence.py"` | none (CPU) | `publication/supplementary/` (Figs. S1–S7, Online Resource 2), `release/sample_dataset.zip` |
 
 Steps 4 and 5 resume automatically after a disconnect; re-run the same cell. Step 5 caches every
 prediction, so steps 5–8 can be repeated without inference. `POTHOLE_DRIVE=/path` changes the root folder
@@ -89,6 +93,7 @@ for scripts 05–08.
 | Table 6, Fig. 4 | `06` → `R5_substitution_controls.csv` |
 | Fig. 5 | `05` → `T1_T3_main_results.csv` |
 | Online Resource 1 | `06` → `REVISION_CHECKS.md` (R1–R4) |
+| Online Resource 2 (Figs. S1–S7) | `09` → `publication/supplementary/` |
 
 ## Software
 
