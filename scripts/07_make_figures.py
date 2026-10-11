@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Publication figures (Figs. 1-5) from the result files written by scripts 01-06.
+Publication figures (Figs. 1, 2, 4, 5, 6; Fig. 3 comes from 09_visual_evidence.py) from the result files written by scripts 01-06.
 White background, no grid, minimal text, Okabe-Ito colours, 84 mm (single) / 174 mm (double) width.
 Each figure is saved as PDF (vector), TIFF (600 dpi, LZW) and PNG (300 dpi).
 
@@ -106,7 +106,7 @@ def fig3_same_model(plt, sub, bins):
     b.set_xlabel(P.DH + ' to nearest training image'); b.set_ylabel(P.AP50)
     b.set_ylim(0, 1.0); b.set_xlim(-0.4, len(bins) - 0.6)
     P.panel(b, 'b')
-    P.save(fig, 'Fig3_same_model')
+    P.save(fig, 'Fig4_same_model')
     plt.close(fig)
 
 
@@ -130,7 +130,7 @@ def fig4_contamination(plt, r5, ref_ap50):
     ax.set_xlabel(P.RHO + ' (%)'); ax.set_ylabel(P.AP50)
     ax.set_xlim(0, 100); ax.set_ylim(0, 0.75)
     ax.legend(loc='upper left', bbox_to_anchor=(0.0, 0.80), fontsize=6.3)
-    P.save(fig, 'Fig4_contamination')
+    P.save(fig, 'Fig5_contamination')
     plt.close(fig)
 
 
@@ -153,6 +153,10 @@ def main():
     fig4_contamination(plt, pd.read_csv(need(REV / 'R5_substitution_controls.csv')),
                        float(ref.AP50) if ref is not None else 0.615)
     P.fig5_external(plt, d)
+    for ext in ('pdf', 'tiff', 'png'):                  # article numbering: external test is Fig. 6
+        f = P.FIG / f'Fig5_external_validity.{ext}'
+        if f.exists():
+            f.replace(P.FIG / f'Fig6_external_validity.{ext}')
 
 
 if __name__ == '__main__':

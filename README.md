@@ -34,10 +34,11 @@ scripts/
   05_protocol_a_and_evaluation.py  YOLO26n on the published split (Protocol A) + evaluation of all models
   06_revision_checks.py            composition, criteria overlap, threshold sensitivity, bootstrap check,
                                    contamination control, final subset results (R1-R6)
-  07_make_figures.py               Figures 1-5 (PDF, 600-dpi TIFF, PNG)
+  07_make_figures.py               Figures 1, 2, 4, 5, 6 (PDF, 600-dpi TIFF, PNG)
   08_export_release.py             collects split files and result tables (no images) into one zip
-  09_visual_evidence.py            supplementary figures S1-S7 (leaked pairs, export copies, d_H ladder,
-                                   predictions, contamination test, annotation conflicts, domain shift)
+  09_visual_evidence.py            Fig. 3 (d_H examples) and supplementary Figs. S1-S6 (leaked pairs,
+                                   export copies, predictions, contamination test, annotation conflicts,
+                                   domain shift)
                                    and a small labelled sample dataset
   pubstyle.py                      shared figure style, colours and notation
 notebooks/
@@ -76,7 +77,7 @@ The split itself is released as file lists with MD5 hashes (`splits/` in the rel
 | 6 | `!python ".../06_revision_checks.py"` | minutes | `experiments/leakage_paper/revision/` |
 | 7 | `!python ".../07_make_figures.py"` | none | `experiments/leakage_paper/publication/figures/` |
 | 8 | `!python ".../08_export_release.py" --with-predictions` | none | `release/bharatpothole-leakage-artifacts.zip` |
-| 9 | `!python ".../09_visual_evidence.py"` | none (CPU) | `publication/supplementary/` (Figs. S1–S7, Online Resource 2), `release/sample_dataset.zip` |
+| 9 | `!python ".../09_visual_evidence.py"` | none (CPU) | `publication/supplementary/` (Fig. 3, Figs. S1–S6, Online Resource 2), `release/sample_dataset.zip` |
 
 Steps 4 and 5 resume automatically after a disconnect; re-run the same cell. Step 5 caches every
 prediction, so steps 5–8 can be repeated without inference. `POTHOLE_DRIVE=/path` changes the root folder
@@ -89,11 +90,12 @@ for scripts 05–08.
 | Table 2, Fig. 1 | `05` → `results/T0_audit_numbers.json`; `07` |
 | Table 3, Fig. 2 | `01` (`per_image.csv`), `02` (`manifest_v2.csv`); `07` |
 | Table 4 | `05` → `T1_T3_main_results.csv`; B-clean row from `06` → `R6_subsets_all.csv` |
-| Table 5, Fig. 3 | `06` → `R6_subsets_positive.csv`, `R6_bins_positive.csv` |
-| Table 6, Fig. 4 | `06` → `R5_substitution_controls.csv` |
-| Fig. 5 | `05` → `T1_T3_main_results.csv` |
+| Fig. 3 | `09` → `publication/supplementary/Fig3_distance_examples` |
+| Table 5, Fig. 4 | `06` → `R6_subsets_positive.csv`, `R6_bins_positive.csv`; `07` |
+| Table 6, Fig. 5 | `06` → `R5_substitution_controls.csv`; `07` |
+| Fig. 6 | `05` → `T1_T3_main_results.csv`; `07` |
 | Online Resource 1 | `06` → `REVISION_CHECKS.md` (R1–R4) |
-| Online Resource 2 (Figs. S1–S7) | `09` → `publication/supplementary/` |
+| Online Resource 2 (Figs. S1–S6) | `09` → `publication/supplementary/Online_Resource_2.docx` |
 
 ## Software
 

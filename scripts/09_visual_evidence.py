@@ -5,12 +5,12 @@ Visual evidence (Online Resource 2) and a small sample dataset - no training, CP
 Figures (PDF + 300-dpi PNG) in experiments/leakage_paper/publication/supplementary/:
   FigS1_leaked_pairs        published test images next to their nearest training image (d_H, SSIM)
   FigS2_export_copies       one source frame whose export copies fall into different splits
-  FigS3_distance_ladder     one test image per d_H bin next to its nearest training image
-  FigS4_predictions_A       Protocol A detector on Leaked vs B-clean test images (GT and predictions)
-  FigS5_contamination       Protocol C detector on C-test images, unseen copies and training copies
-  FigS6_annotation          near-identical unique frames with different annotations
-  FigS7_domain_shift        BharatPotHole vs RDD2022-India examples
-  Online_Resource_2.docx    all figures with captions
+  Fig3_distance_examples    MAIN-TEXT Fig. 3: one test image per d_H bin and its nearest training image
+  FigS3_predictions_A       Protocol A detector on Leaked vs B-clean test images (GT and predictions)
+  FigS4_contamination       Protocol C detector on C-test images, unseen copies and training copies
+  FigS5_annotation          near-identical unique frames with different annotations
+  FigS6_domain_shift        BharatPotHole vs RDD2022-India examples
+  Online_Resource_2.docx    the supplementary figures, numbered S1-S6 in the order above (S3 excluded)
 
 Sample dataset in release/sample_dataset/ (+ .zip): the images shown above plus random B-clean and
 C-test images, their YOLO labels, and sample_manifest.csv (role, split, video, MD5, d_H, SSIM).
@@ -115,11 +115,13 @@ def grid(nrows, ncols, height_per_row=None):
     return plt, fig, axes
 
 
-def save(fig, name, caption):
+def save(fig, name, caption, supp=True):
+    """supp=False: main-text figure (not added to Online Resource 2)."""
     SUP.mkdir(parents=True, exist_ok=True)
     fig.savefig(SUP / f'{name}.pdf')
     fig.savefig(SUP / f'{name}.png', dpi=300)
-    CAPTIONS[name] = caption
+    if supp:
+        CAPTIONS[name] = caption
     print('  saved', name)
 
 
@@ -195,7 +197,7 @@ def main():
          'published split each was assigned to. Green boxes: ground truth')
     plt.close(fig)
 
-    # ---------------- S3 distance ladder
+    # ---------------- main-text Fig. 3: distance ladder
     bins = [(0, 4), (5, 8), (9, 12), (13, 64)]
     plt, fig, ax = grid(2, 4)
     for j, (lo, hi) in enumerate(bins):
@@ -208,10 +210,10 @@ def main():
         draw(ax[1][j], r.nn_key, title='Nearest training image',
              note=f'$\\mathit{{d}}_{{\\mathrm{{H}}}}$ = {int(r.nn_d)}, SSIM = {ssim(r.key, r.nn_key):.2f}')
         add_sample(r.key, 'S3_test', split='test', video=r.seq_prefix, d_H=int(r.nn_d))
-    save(fig, 'FigS3_distance_ladder',
+    save(fig, 'Fig3_distance_examples',
          'One positive test image per dH bin (top) and its nearest training image (bottom). Images at dH ≤ 4 '
          'are near-copies; at larger distances the nearest training image shows a different scene. '
-         'Green boxes: ground truth')
+         'Green boxes: ground truth', supp=False)
     plt.close(fig)
 
     # ---------------- S4 Protocol A predictions on Leaked vs B-clean
@@ -227,7 +229,7 @@ def main():
         for j, (_, r) in enumerate(Bc.iterrows()):
             draw(ax[1][j], r.key, preds=cA.get(r.key), title='B-clean' if j == 1 else None, title_color=P.C_CLEAN)
             add_sample(r.key, 'S4_b_clean', split='test', video=r.seq_prefix, d_H=int(r.nn_d))
-        save(fig, 'FigS4_predictions_A',
+        save(fig, 'FigS3_predictions_A',
              f'YOLO26n trained on the published split (Protocol A) on test images with a near-duplicate in '
              f'training (Leaked, top) and without (B-clean, bottom). Green: ground truth; orange dashed: '
              f'predictions with confidence ≥ {CONF_SHOW}')
@@ -255,7 +257,7 @@ def main():
             for j, k in enumerate(keys):
                 draw(ax[i][j], k, preds=cC.get(k), title=lab if j == 1 else None, title_color=c)
                 add_sample(k, f'S5_{lab.split(" (")[0].replace(" ", "_")}', split='v2-test' if i == 0 else 'copy')
-        save(fig, 'FigS5_contamination',
+        save(fig, 'FigS4_contamination',
              'Controlled contamination test: YOLO26n trained on the video-disjoint split (Protocol C) on '
              'C-test images (top), export copies of unseen C-test frames (middle) and export copies of its '
              f'own training frames (bottom). Green: ground truth; orange dashed: predictions with confidence ≥ {CONF_SHOW}')
@@ -284,7 +286,7 @@ def main():
             draw(ax[i][1], rb.key, note=f'{rb.nb} boxes ($\\mathit{{d}}_{{\\mathrm{{H}}}}$ = {d_})')
             add_sample(ra.key, 'S6_annotation_pair', split=ra.new_split, video=ra.seq_prefix, d_H=d_)
             add_sample(rb.key, 'S6_annotation_pair', split=rb.new_split, video=rb.seq_prefix, d_H=d_)
-        save(fig, 'FigS6_annotation',
+        save(fig, 'FigS5_annotation',
              'Pairs of near-identical unique frames (dH ≤ 4) whose annotations differ by two or more boxes. '
              'Green boxes: ground truth')
         plt.close(fig)
@@ -301,7 +303,7 @@ def main():
         for j, k in enumerate(rsel):
             draw(ax[1][j], k, title='RDD2022-India' if j == 0 else None)
             add_sample(k, 'S7_rdd_india', split='external')
-        save(fig, 'FigS7_domain_shift',
+        save(fig, 'FigS6_domain_shift',
              'Random positive images from BharatPotHole (top) and the RDD2022-India pothole subset (bottom). '
              'Green boxes: ground truth (D40 for RDD2022)')
         plt.close(fig)
@@ -320,8 +322,12 @@ def write_docx():
     p = d.add_paragraph(); r = p.add_run('Online Resource 2 – Visual evidence'); r.bold = True; r.font.size = Pt(13)
     d.add_paragraph('How much does data leakage inflate road-defect detection performance? Evidence from a '
                     're-split of BharatPotHole')
+    from PIL import Image
     for i, (name, cap) in enumerate(CAPTIONS.items(), 1):
-        d.add_picture(str(SUP / f'{name}.png'), width=Cm(17))
+        jpg = SUP / f'{name}.jpg'
+        Image.open(SUP / f'{name}.png').convert('RGB').save(jpg, quality=90, optimize=True)
+        d.add_picture(str(jpg), width=Cm(12 if 'annotation' in name else 17))
+        d.paragraphs[-1].paragraph_format.keep_with_next = True
         p = d.add_paragraph(); r = p.add_run(f'Fig. S{i} '); r.bold = True; r.font.size = Pt(9)
         r2 = p.add_run(cap); r2.font.size = Pt(9)
     d.save(SUP / 'Online_Resource_2.docx')
