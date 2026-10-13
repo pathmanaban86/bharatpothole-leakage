@@ -89,7 +89,7 @@ def fig3_same_model(plt, sub, bins):
     bars = [('Leaked', P.C_LEAK), ('A-test', P.C_NEUTRAL), ('B-rule', P.C_CLEAN)]
     for i, (k, c) in enumerate(bars):
         v = float(sub.loc[k, 'AP50']); lo, hi = parse_ci(sub.loc[k, 'AP50_CI'])
-        a.bar(i, v, width=0.6, color=c)
+        a.bar(i, v, width=0.6, color=c, hatch='////' if k == 'Leaked' else None, edgecolor='white', lw=0)
         a.errorbar(i, v, yerr=[[v - lo], [hi - v]], color=P.C_INK, lw=0.8, capsize=2.5, capthick=0.8)
     a.set_xticks(range(3), ['Leaked', 'A-test', 'B-clean']); a.tick_params(axis='x', length=0)
     a.set_ylabel(P.AP50); a.set_ylim(0, 1.0)

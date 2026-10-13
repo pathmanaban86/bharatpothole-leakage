@@ -170,9 +170,10 @@ def fig2_distance(plt, d):
     v2 = man.loc[man.new_split.isin(['valid', 'test']), 'nn_phash_to_train_v2'].dropna()
     bins = np.arange(0, 33)
     fig, ax = plt.subplots(figsize=(W1, 1.9))
-    for data, c, lab in [(orig, C_LEAK, 'Published split'), (v2, C_CLEAN, 'Video-disjoint split')]:
+    for data, c, ls, lab in [(orig, C_LEAK, '-', 'Published split'),
+                             (v2, C_CLEAN, (0, (3, 1.5)), 'Video-disjoint split')]:
         h, _ = np.histogram(data, bins)
-        ax.step(bins[:-1], 100 * h / len(data), where='post', color=c, label=lab)
+        ax.step(bins[:-1], 100 * h / len(data), where='post', color=c, ls=ls, label=lab)
     ax.axvline(4.5, color=C_NEUTRAL, lw=0.8, ls=(0, (3, 2)))
     ax.set_xlabel(DH + ' to nearest training image')
     ax.set_ylabel('Held-out images (%)')
@@ -249,8 +250,9 @@ def fig5_external(plt, d):
     """Internal test versus external RDD-India, per model and training protocol."""
     main = d['main']
     series = [('yolo26n', 'A', 'A-test', C_LEAK, 'o', 'YOLO26n, Protocol A'),
-              ('yolo26n', 'C', 'C-test', C_CLEAN, 'o', 'YOLO26n, Protocol C'),
-              ('yolo26s', 'C', 'C-test', C_ALT, 's', 'YOLO26s, Protocol C')]
+              ('yolo26n', 'C', 'C-test', C_CLEAN, 's', 'YOLO26n, Protocol C'),
+              ('yolo26s', 'C', 'C-test', C_ALT, '^', 'YOLO26s, Protocol C')]
+    lstyle = {0: '-', 1: (0, (3, 1.5)), 2: (0, (1, 1.2))}
     fig, ax = plt.subplots(figsize=(W1, 2.1))
     off = {0: -0.03, 1: 0.0, 2: 0.03}
     for i, (m, prot, internal, c, mk, lab) in enumerate(series):
@@ -261,7 +263,7 @@ def fig5_external(plt, d):
         ys = np.array([r_in.AP50, r_ex.AP50])
         err = np.array([[r_in.AP50 - r_in.AP50_lo, r_ex.AP50 - r_ex.AP50_lo],
                         [r_in.AP50_hi - r_in.AP50, r_ex.AP50_hi - r_ex.AP50]])
-        ax.plot(xs, ys, color=c, lw=1.0)
+        ax.plot(xs, ys, color=c, lw=1.0, ls=lstyle[i])
         ax.errorbar(xs, ys, yerr=np.nan_to_num(err), fmt=mk, color=c, ms=4, lw=0.8,
                     capsize=2, capthick=0.8, label=lab)
     ax.set_xticks([0, 1], ['Internal test', 'RDD-India'])
