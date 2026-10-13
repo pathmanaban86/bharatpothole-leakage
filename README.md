@@ -1,4 +1,4 @@
-# How much does data leakage inflate road-defect detection performance?
+# Train–Test Leakage in Pothole Detection Benchmarks: Evidence from a Video-Disjoint Re-Split of BharatPotHole
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23337738.svg)](https://doi.org/10.5281/zenodo.23337738)
 
