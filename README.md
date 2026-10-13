@@ -97,6 +97,13 @@ for scripts 05–08.
 | Online Resource 1 | `06` → `REVISION_CHECKS.md` (R1–R4) |
 | Online Resource 2 (Figs. S1–S6) | `09` → `publication/supplementary/Online_Resource_2.docx` |
 
+## Supplemental materials
+
+`supplementary/Supplemental_Materials.pdf` holds the supplemental materials of the article:
+Tables S1–S4 (sensitivity checks R1–R4) and Figs. S1–S6 (visual evidence of leaked pairs).
+The example frames in Figs. S1–S6 are reduced-size excerpts of BharatPotHole images, shown
+for scholarly analysis; the dataset itself is not redistributed here.
+
 ## Software
 
 Python 3.11+, Ultralytics 8.4.162 (pinned; the scripts install it), PyTorch as provided by Colab,
