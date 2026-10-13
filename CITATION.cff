@@ -1,21 +1,23 @@
 cff-version: 1.2.0
-message: "If you use this code or the split, please cite the article below."
+message: "If you use this code or the split, please cite it as below."
 title: "BharatPotHole leakage audit and video-disjoint re-split"
 type: software
 license: MIT
+doi: 10.5281/zenodo.23337738
+repository-code: "https://github.com/pathmanaban86/bharatpothole-leakage"
 authors:
   - family-names: Pugazhendi
     given-names: P. Pathmanaban
     affiliation: "Department of Automobile Engineering, Easwari Engineering College (SRM Group), Chennai, India"
     email: princepathu@gmail.com
-version: "1.0.0"
-date-released: 2026-10-11
+version: "JCCE_submission"
+date-released: 2026-10-13
 preferred-citation:
   type: article
-  title: "How much does data leakage inflate road-defect detection performance? Evidence from a re-split of BharatPotHole"
+  title: "Train–Test Leakage in Pothole Detection Benchmarks: Evidence from a Video-Disjoint Re-Split of BharatPotHole"
   authors:
     - family-names: Pugazhendi
       given-names: P. Pathmanaban
-  journal: "Data Science for Transportation"
+  journal: "Journal of Computing in Civil Engineering"
   year: 2026
   notes: "Submitted"

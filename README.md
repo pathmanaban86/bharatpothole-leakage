@@ -1,5 +1,7 @@
 # How much does data leakage inflate road-defect detection performance?
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23337738.svg)](https://doi.org/10.5281/zenodo.23337738)
+
 Code, split definitions and analysis for the article
 
 > Pugazhendi PP. *How much does data leakage inflate road-defect detection performance? Evidence from a
