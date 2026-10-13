@@ -4,8 +4,8 @@
 
 Code, split definitions and analysis for the article
 
-> Pugazhendi PP. *How much does data leakage inflate road-defect detection performance? Evidence from a
-> re-split of BharatPotHole.* Submitted to *Data Science for Transportation* (Springer Nature), 2026.
+> Pugazhendi, P. P. *Train–Test Leakage in Pothole Detection Benchmarks: Evidence from a Video-Disjoint
+> Re-Split of BharatPotHole.* Submitted to *Journal of Computing in Civil Engineering* (ASCE), 2026.
 
 The study audits the public **BharatPotHole** dataset (7,074 dashboard-video frames, released with
 iWatchRoadv2), builds a deduplicated **video-disjoint** split, and measures how train–test leakage changes
